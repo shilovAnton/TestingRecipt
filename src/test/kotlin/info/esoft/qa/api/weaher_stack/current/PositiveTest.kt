@@ -31,6 +31,22 @@ class PositiveTest:Settings() {
     }
 
     @Test
+    fun getEmptyTest() {
+        params?.put("type","public")
+        params?.put("app_id", "d85dd45b")
+        params?.put("app_key", "ce120a6f62b9f64774014ee66a73a57c")
+
+        Given {
+            spec(requestSpecification)
+            queryParams(params)
+        } When {
+            get("/api/recipes/v2")
+        } Then {
+            statusCode(200)
+        }
+    }
+
+    @Test
     fun getDietBalancedTest() {
         params?.put("type","public")
         params?.put("app_id", "d85dd45b")
@@ -57,7 +73,6 @@ class PositiveTest:Settings() {
         params?.put("type","public")
         params?.put("app_id", "d85dd45b")
         params?.put("app_key", "ce120a6f62b9f64774014ee66a73a57c")
-        params?.put("q", "paste")
         params?.put("cuisineType", "American")
 
         val recipeSearch: RecipeSearch =
@@ -75,11 +90,13 @@ class PositiveTest:Settings() {
     }
 
     @Test
-    fun getPasteTest() {
+    fun getAllParametersTest() {
         params?.put("type","public")
         params?.put("app_id", "d85dd45b")
         params?.put("app_key", "ce120a6f62b9f64774014ee66a73a57c")
-        params?.put("q", "paste")
+        params?.put("health", "alcohol-free")
+        params?.put("mealType", "Dinner")
+        params?.put("dishType", "Main course")
 
         val recipeSearch: RecipeSearch =
             Given {
@@ -92,8 +109,13 @@ class PositiveTest:Settings() {
             } Extract {
                 response().`as`(RecipeSearch::class.java, ObjectMapperType.JACKSON_2)
             }
-        Assertions.assertTrue(recipeSearch.hits.all { it.recipe.cuisineType.contains("american")})
+        Assertions.assertTrue(recipeSearch.hits.all { it.recipe.healthLabels.contains("Alcohol-Free")
+             && it.recipe.mealType.contains("lunch/dinner")
+                && it.recipe.dishType.contains("main course")
+           })
     }
+
+
 }
 
 

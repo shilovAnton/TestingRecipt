@@ -18,4 +18,7 @@ data class HitsInfo(
 data class RecipeInfo (
     @param:JsonProperty("dietLabels") var dietLabels: List<String>,
     @param:JsonProperty("cuisineType") var cuisineType: List<String>,
+    @param:JsonProperty("healthLabels") var healthLabels: List<String>,
+    @param:JsonProperty("mealType") var mealType: List<String>,
+    @param:JsonProperty("dishType") var dishType: List<String>,
     )
