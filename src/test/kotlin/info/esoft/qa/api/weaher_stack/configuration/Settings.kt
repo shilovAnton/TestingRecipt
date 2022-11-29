@@ -10,7 +10,7 @@ import io.restassured.response.Response
 import io.restassured.specification.RequestSpecification
 
 open class Settings {
-    private var URL = "http://api.weatherstack.com"
+    private var URL = "https://api.edamam.com"
     private var BASE_PATH = ""
 
     protected var headers:    HashMap<String, Any>? = null
